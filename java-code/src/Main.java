@@ -1,7 +1,23 @@
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        // Create 5 sample BankAccount objects
+        BankAccount acct1 = new BankAccount("Alice Smith", "ACCT1001", new BigDecimal("500.00"));
+        BankAccount acct2 = new BankAccount("Bob Johnson", "ACCT1002", new BigDecimal("1250.75"));
+        BankAccount acct3 = new BankAccount("Carla Green", "ACCT1003", new BigDecimal("0.00"));
+        BankAccount acct4 = new BankAccount("David Lee", "ACCT1004", new BigDecimal("9999.99"));
+        BankAccount acct5 = new BankAccount("Evelyn White", "ACCT1005", new BigDecimal("250.50"));
+
+        // Print confirmation for quick testing
+        System.out.println("Created 5 BankAccount objects for testing:");
+        System.out.println("1: " + acct1);
+        System.out.println("2: " + acct2);
+        System.out.println("3: " + acct3);
+        System.out.println("4: " + acct4);
+        System.out.println("5: " + acct5);
+
         Scanner scanner = new Scanner(System.in);
         int choice;
 
@@ -20,6 +36,7 @@ public class Main {
             switch (choice) {
                 case 1:
                     System.out.println("[View Account Details selected]");
+
                     break;
                 case 2:
                     System.out.println("[Transfer Funds selected]");

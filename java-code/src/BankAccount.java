@@ -1,4 +1,5 @@
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,7 +8,11 @@ import java.util.List;
  * Stub-only: declarations and Javadoc; no implementations.
  */
 public class BankAccount {
-
+    private String accountName;
+    private String accountNumber;
+    private BigDecimal balance;
+    private BigDecimal minimumBalance;
+    private final List<String> transactions;
     /**
      * Constructs a new account.
      *
@@ -15,7 +20,36 @@ public class BankAccount {
      * @param accountNumber unique account identifier
      * @param openingBalance initial balance; non-negative
      */
-    public BankAccount(String accountName, String accountNumber, BigDecimal openingBalance) { }
+    public BankAccount(String accountName, String accountNumber, BigDecimal openingBalance) {
+        if (accountName == null || accountName.isBlank()) {
+            throw new IllegalArgumentException("Account name cannot be null or blank.");
+        }
+        if (accountNumber == null || accountNumber.isBlank()) {
+            throw new IllegalArgumentException("Account number cannot be null or blank.");
+        }
+        if (openingBalance == null || openingBalance.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Opening balance must be non-negative.");
+        }
+
+        this.accountName = accountName;
+        this.accountNumber = accountNumber;
+        this.balance = openingBalance;
+        this.minimumBalance = BigDecimal.ZERO; // default threshold
+        this.transactions = new ArrayList<>();
+        this.transactions.add("Account opened with balance: " + openingBalance);
+
+    }
+
+    @Override
+    public String toString() {
+        return "BankAccount{" +
+                "accountName='" + accountName + '\'' +
+                ", accountNumber='" + accountNumber + '\'' +
+                ", balance=" + balance +
+                ", minimumBalance=" + minimumBalance +
+                ", transactions=" + transactions +
+                '}';
+    }
 
     /**
      * Returns an immutable snapshot of core account details.
