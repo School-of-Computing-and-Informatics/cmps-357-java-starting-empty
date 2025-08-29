@@ -60,9 +60,41 @@ Each commit corresponds to a step you can follow or reproduce yourself:
 
 ---
 
-## How to Run Locally
+## Cloning the Project
+### Option 1 — IntelliJ IDEA
 
+1. Open IntelliJ IDEA.
+
+1. From the Welcome Screen, click Get from VCS.
+(If a project is already open, use File → New → Project from Version Control.)
+
+1. In the URL field, paste:
+https://github.com/School-of-Computing-and-Informatics/cmps-357-java-starting-empty.git
+
+1. Choose a local directory where the project will be saved.
+
+1. Click Clone. IntelliJ will open the project automatically.
+
+6. Open Main.java, right-click inside the file, and choose Run 'Main.main()'.
+
+### Option 2 — Command Line
 1. Clone the repository:
    ```bash
    git clone https://github.com/School-of-Computing-and-Informatics/cmps-357-java-starting-empty.git
    cd cmps-357-java-starting-empty
+   ```
+1. Compile and run:
+   ```bash 
+   javac Main.java
+   java Main
+   ```
+---
+## Next Steps for Students
+
+- Add deposit and withdraw methods.
+
+- Move tests from main into JUnit.
+
+- Add simple file I/O (CSV for transactions).
+
+- Try prompting GPT to suggest improvements (naming, error handling, documentation).
