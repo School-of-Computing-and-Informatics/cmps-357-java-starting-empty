@@ -1,4 +1,5 @@
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -17,6 +18,38 @@ public class Main {
         System.out.println("3: " + acct3);
         System.out.println("4: " + acct4);
         System.out.println("5: " + acct5);
+
+        // --- Test 1: payBills on acct2 with 3+ transactions ---
+        List<String> bills1 = List.of(
+                "CGI 123.45",
+                "Bellsouth_Telecom 56.78",
+                "WaterDept 42.00",
+                "ElectricCo 88.10"
+        );
+        System.out.println("Before (acct2) balance: " + acct2.getBalance());
+        acct2.payBills(bills1);
+        System.out.println("After  (acct2) balance: " + acct2.getBalance());
+        System.out.println("Transactions (acct2):");
+        for (String t : acct2.listTransactions()) {
+            System.out.println("  " + t);
+        }
+        System.out.println();
+
+        // --- Test 2: payBills on acct4 with 3+ transactions ---
+        List<String> bills2 = List.of(
+                "City_Taxes 350.00",
+                "InsuranceCo 225.50",
+                "InternetISP 79.99",
+                "GymMembership 29.99"
+        );
+        System.out.println("Before (acct4) balance: " + acct4.getBalance());
+        acct4.payBills(bills2);
+        System.out.println("After  (acct4) balance: " + acct4.getBalance());
+        System.out.println("Transactions (acct4):");
+        for (String t : acct4.listTransactions()) {
+            System.out.println("  " + t);
+        }
+
 
         Scanner scanner = new Scanner(System.in);
         int choice;

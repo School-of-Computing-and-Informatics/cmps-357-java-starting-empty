@@ -76,12 +76,61 @@ public class BankAccount {
     public void transferTo(String destinationAccountNumber, BigDecimal amount) { }
 
     /**
-     * Pays one or more bills encoded as strings (e.g., {@code "ABC_Company - 123.45"}).
-     * Each entry should include a payee label and a decimal amount.
+     * Pays one or more bills encoded as strings (e.g., "CGI 123.45").
+     * Deducts each bill amount from balance and records the transaction.
      *
-     * @param billEntries list of bill strings to pay in a single batch
+     * @param billEntries list of bill strings in the format "Payee amount"
+     * @throws IllegalArgumentException if format is invalid or insufficient funds
      */
-    public void payBills(List<String> billEntries) { }
+    public void payBills(List<String> billEntries) {
+        if (billEntries == null || billEntries.isEmpty()) {
+            throw new IllegalArgumentException("Bill list cannot be null or empty.");
+        }
+
+        for (String entry : billEntries) {
+            // Trim removes leading/trailing whitespace before splitting
+            // .split("\\s+") breaks the string at any run of whitespace characters
+            //   "\\s+" is a regex:
+            //     \s  = any whitespace (space, tab, newline)
+            //     +   = one or more of the preceding token
+            //   Because this is inside a Java string literal, the backslash
+            //   itself must be escaped, so we write "\\s+" instead of "\s+"
+            //
+            // Example: "CGI   123.45" -> ["CGI", "123.45"]
+            String[] parts = entry.trim().split("\\s+");
+
+            // Expect exactly two parts: payee name and amount
+            if (parts.length != 2) {
+                throw new IllegalArgumentException("Invalid bill format: " + entry);
+            }
+
+            String payee = parts[0];   // First token = payee name
+            BigDecimal amount;
+
+            try {
+                amount = new BigDecimal(parts[1]); // Second token = amount string
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Invalid amount in bill: " + entry);
+            }
+
+            // Ensure amount is positive
+            if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+                throw new IllegalArgumentException("Bill amount must be positive: " + entry);
+            }
+
+            // Ensure account has enough funds (respecting minimumBalance threshold)
+            if (balance.subtract(amount).compareTo(minimumBalance) < 0) {
+                throw new IllegalArgumentException("Insufficient funds for bill: " + entry);
+            }
+
+            // Deduct amount from balance
+            balance = balance.subtract(amount);
+
+            // Record the transaction in the log
+            transactions.add("Paid bill to " + payee + " amount: " + amount);
+        }
+    }
+
 
     /**
      * Returns a read-only view of transaction descriptions.
