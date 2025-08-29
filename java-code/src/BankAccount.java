@@ -138,7 +138,9 @@ public class BankAccount {
      *
      * @return ordered list of transaction strings, newest first
      */
-    public List<String> listTransactions() { return null; }
+    public List<String> listTransactions() {
+        return java.util.Collections.unmodifiableList(transactions);
+    }
 
     /**
      * Sets a minimum balance constraint used by validation or alerts.
